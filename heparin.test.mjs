@@ -1,0 +1,44 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { calculateAdjustment } from "./heparin.js";
+
+const calculate = (indication, weightKg, apttSeconds, currentRateMlHour) =>
+  calculateAdjustment({ indication, weightKg, apttSeconds, currentRateMlHour });
+
+test("VTE/PE protocol reproduces the 40–70 kg source-table actions", () => {
+  assertSubset(calculate("vte", 40, 34, 18), { bolusUnits: 3000, rateDeltaMlHour: 4, newRateMlHour: 22 });
+  assertSubset(calculate("vte", 50, 40, 22), { bolusUnits: 2000, rateDeltaMlHour: 2.5, newRateMlHour: 24.5 });
+  assertSubset(calculate("vte", 60, 55, 26), { bolusUnits: 0, rateDeltaMlHour: 3, newRateMlHour: 29 });
+  assertSubset(calculate("vte", 70, 70, 28), { rateDeltaMlHour: 0, newRateMlHour: 28 });
+  assertSubset(calculate("vte", 60, 85, 26), { rateDeltaMlHour: -3, newRateMlHour: 23 });
+  assertSubset(calculate("vte", 50, 100, 22), { holdMinutes: 30, rateDeltaMlHour: -2.5, newRateMlHour: 19.5 });
+  assertSubset(calculate("vte", 70, 121, 28), { holdMinutes: 60, rateDeltaMlHour: -5.5, newRateMlHour: 22.5, notifyPhysician: true });
+});
+
+test("ACS protocol reproduces the source-table actions", () => {
+  assertSubset(calculate("acs", 40, 39, 14), { bolusUnits: 2000, rateDeltaMlHour: 2, newRateMlHour: 16 });
+  assertSubset(calculate("acs", 50, 45, 17), { rateDeltaMlHour: 2.5, newRateMlHour: 19.5 });
+  assertSubset(calculate("acs", 60, 60, 21), { rateDeltaMlHour: 0, newRateMlHour: 21 });
+  assertSubset(calculate("acs", 70, 80, 24), { rateDeltaMlHour: -3.5, newRateMlHour: 20.5 });
+  assertSubset(calculate("acs", 40, 90, 14), { holdMinutes: 30, rateDeltaMlHour: -2, newRateMlHour: 12 });
+  assertSubset(calculate("acs", 50, 101, 17), { holdMinutes: 60, rateDeltaMlHour: -4, newRateMlHour: 13, notifyPhysician: true });
+});
+
+test("aPTT decimal values do not fall between protocol bands", () => {
+  assert.equal(calculate("acs", 50, 75.5, 17).bandLabel, "76–85 秒");
+  assert.equal(calculate("vte", 50, 49.5, 22).bandLabel, "35–49 秒");
+  assert.equal(calculate("vte", 50, 89.5, 22).bandLabel, "80–89 秒");
+});
+
+test("invalid clinical inputs are rejected", () => {
+  assert.throws(() => calculate("invalid", 60, 70, 20), TypeError);
+  assert.throws(() => calculate("acs", 0, 70, 20), RangeError);
+  assert.throws(() => calculate("acs", 60, 0, 20), RangeError);
+  assert.throws(() => calculate("acs", 60, 70, -1), RangeError);
+});
+
+function assertSubset(actual, expected) {
+  for (const [key, value] of Object.entries(expected)) {
+    assert.deepEqual(actual[key], value, key);
+  }
+}
