@@ -1,6 +1,6 @@
-# Heparin aPTT 調整計算
+# Heparin dose 調整計算
 
-依高醫 MICU UFH protocol，根據體重、適應症、目前 aPTT 與 pump 流速，計算 ACS 或 VTE/PE 的 bolus、暫停時間及新流速。
+依高醫 ICU UFH protocol，根據體重、適應症、目前 aPTT 與 pump 流速，計算 ACS 或 VTE/PE 的 heparin pump 流速（含 bolus 與暫停時間）。
 
 ## 使用方式
 
@@ -13,7 +13,7 @@
 
 ## 計算規則
 
-- aPTT 分段、bolus、暫停與 U/kg/h 增減均依使用者提供的高醫 MICU protocol。
+- aPTT 分段、bolus、暫停與 U/kg/h 增減均依使用者提供的高醫 ICU protocol。
 - 原始表列出 40、50、60、70 kg。本工具對其他體重依表格底層的 U/kg 係數推算。
 - 流速以 40 U/mL 換算，四捨五入至 0.5 mL/h。
 - Bolus 四捨五入至 500 U，上限 5,000 U。
