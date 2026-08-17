@@ -281,7 +281,7 @@
         : `原始表未列 ${format(output.weightKg)} kg；本結果依 U/kg 係數推算並四捨五入。請醫師／藥師再次核對後使用。`;
 
       copyText = [
-        `Heparin ${output.indicationLabel} 劑量調整`,
+        `Heparin ${output.indicationLabel} aPTT 調整`,
         `體重 ${format(output.weightKg)} kg；aPTT ${format(output.apttSeconds)} 秒（${output.bandLabel}）`,
         output.bolusUnits ? `Bolus ${output.bolusUnits} U` : null,
         output.holdMinutes ? `暫停 ${output.holdMinutes} 分鐘` : null,

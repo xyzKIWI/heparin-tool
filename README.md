@@ -21,7 +21,7 @@
 
 ## 資料來源與校對
 
-- 高醫內科心護病房「KMUH MICU Heparin Infusion Protocol」照片，由使用者提供；以照片表格逐列人工轉錄
+- 高醫心臟內科加護病房「KMUH MICU Heparin Infusion Protocol」照片，由使用者提供；以照片表格逐列人工轉錄
 - [2025 ACC/AHA/ACEP/NAEMSP/SCAI ACS Guideline](https://www.ahajournals.org/doi/10.1161/CIR.0000000000001309)：ACS 起始劑量與目標範圍比對
 - [GlobalRPH Heparin Dosing Calculator](https://globalrph.com/medcalcs/heparin-dosing-calculator-custom-options-available/)：起始體重式劑量與介面參考
 - 資料最後校對：2026-08-18
