@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ①改標題 -->
+<title>工具名稱</title>
+<style>
+  :root{
+    --navy:#16395b; --navy2:#1e4d77; --teal:#0e7490; --teal-l:#e0f2fe;
+    --ink:#1f2937; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Noto Sans TC","Segoe UI",sans-serif;}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2)); color:#fff;
+    padding:28px 20px 22px; text-align:center;}
+  header h1{font-size:1.4rem; margin:0 0 6px; font-weight:700;}
+  header .sub{color:#cfe3f4; font-size:.9rem;}
+  .wrap{max-width:760px; margin:0 auto; padding:20px;}
+  .panel{background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:16px 20px; margin:14px 0; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .disc{max-width:760px; margin:10px auto 40px; padding:12px 18px; font-size:.8rem;
+    color:var(--muted); background:#fff; border:1px solid var(--line); border-radius:10px;}
+</style>
+</head>
+<body>
+<header>
+  <!-- ①改標題與副標 -->
+  <h1>工具名稱</h1>
+  <div class="sub">一句話說明這個工具做什麼</div>
+</header>
+<div class="wrap">
+  <div class="panel">
+    <!-- ②工具本體寫在這裡（輸入欄、結果區、資料表…） -->
+    工具內容
+  </div>
+</div>
+<div class="disc">
+  <!-- ③免責聲明照抄可用；「資料校對」日期每次改資料都要更新 -->
+  ⚠️ <b>免責：</b>本工具僅供臨床決策輔助參考，不取代臨床判斷、官方仿單與最新指引，
+  使用前請自行核對原始資料來源。（資料校對：YYYY-MM-DD）
+</div>
+<!-- ④若有藥物/代碼等資料，建議放獨立 data.js 方便校對與更新 -->
+</body>
+</html>
