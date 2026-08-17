@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="依高醫 MICU protocol 計算 ACS、VTE/PE 的 UFH aPTT 調整建議。">
-<title>Heparin aPTT 調整計算</title>
+<meta name="description" content="依高醫 ICU protocol 計算 ACS、VTE/PE 的 heparin pump 流速調整建議。">
+<title>Heparin dose 調整計算</title>
 <style>
   :root{
     --navy:#16395b; --navy2:#1e4d77; --teal:#0e7490; --teal-dark:#0b6077;
@@ -92,8 +92,8 @@
 </head>
 <body>
 <header>
-  <h1>Heparin aPTT 調整</h1>
-  <div class="sub">高醫 MICU protocol｜ACS・VTE / PE</div>
+  <h1>Heparin dose 調整</h1>
+  <div class="sub">高醫 ICU protocol｜ACS・VTE / PE</div>
 </header>
 
 <main class="wrap">
@@ -180,7 +180,7 @@
   </details>
 
   <div class="disc">
-    <b>臨床安全：</b>本工具依使用者提供之高醫 MICU protocol 轉換，僅供醫療專業人員核算，不是醫囑。
+    <b>臨床安全：</b>本工具依使用者提供之高醫 ICU protocol 轉換，僅供醫療專業人員核算，不是醫囑。
     原表列 40／50／60／70 kg；其他體重依其 U/kg 係數推算，流速四捨五入至 0.5 mL/h，bolus 四捨五入至 500 U 且最高 5,000 U，須再次人工核對。
     調整後依院內流程追蹤 aPTT；原表為 q8h、連續兩次治療範圍可改 QD，並追蹤 Hb 與 platelet。（資料校對：2026-08-18）
   </div>
@@ -281,7 +281,7 @@
         : `原始表未列 ${format(output.weightKg)} kg；本結果依 U/kg 係數推算並四捨五入。請醫師／藥師再次核對後使用。`;
 
       copyText = [
-        `Heparin ${output.indicationLabel} aPTT 調整`,
+        `Heparin ${output.indicationLabel} 劑量調整`,
         `體重 ${format(output.weightKg)} kg；aPTT ${format(output.apttSeconds)} 秒（${output.bandLabel}）`,
         output.bolusUnits ? `Bolus ${output.bolusUnits} U` : null,
         output.holdMinutes ? `暫停 ${output.holdMinutes} 分鐘` : null,
