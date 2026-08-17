@@ -65,6 +65,8 @@ export function calculateAdjustment({ indication, weightKg, apttSeconds, current
     indicationLabel: protocol.label,
     therapeuticRange: protocol.therapeuticRange,
     bandLabel: band.label,
+    // 依 protocol 的 U/kg/h 增減方向判定，不看四捨五入後的 mL/h
+    apttStatus: band.rateDeltaPerKg > 0 ? "below" : band.rateDeltaPerKg < 0 ? "above" : "in-range",
     weightKg,
     apttSeconds,
     concentrationUnitsMl: HEPARIN_CONCENTRATION,
