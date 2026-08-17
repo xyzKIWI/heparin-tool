@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { calculateAdjustment } from "./heparin.js";
+import { calculateAdjustment, PROTOCOLS } from "./heparin.js";
 
 const calculate = (indication, weightKg, apttSeconds, currentRateMlHour) =>
   calculateAdjustment({ indication, weightKg, apttSeconds, currentRateMlHour });
@@ -28,6 +28,27 @@ test("aPTT decimal values do not fall between protocol bands", () => {
   assert.equal(calculate("acs", 50, 75.5, 17).bandLabel, "76–85 秒");
   assert.equal(calculate("vte", 50, 49.5, 22).bandLabel, "35–49 秒");
   assert.equal(calculate("vte", 50, 89.5, 22).bandLabel, "80–89 秒");
+});
+
+test("apttStatus marks in-range only when the protocol asks for no rate change", () => {
+  assert.equal(calculate("acs", 60, 30, 21).apttStatus, "below");
+  assert.equal(calculate("acs", 60, 45, 21).apttStatus, "below");
+  assert.equal(calculate("acs", 60, 60, 21).apttStatus, "in-range");
+  assert.equal(calculate("acs", 60, 80, 21).apttStatus, "above");
+  assert.equal(calculate("acs", 60, 110, 21).apttStatus, "above");
+  assert.equal(calculate("vte", 60, 30, 26).apttStatus, "below");
+  assert.equal(calculate("vte", 60, 70, 26).apttStatus, "in-range");
+  assert.equal(calculate("vte", 60, 130, 26).apttStatus, "above");
+});
+
+test("every band exposes a status, and bolus never appears outside below-range", () => {
+  for (const [indication, protocol] of Object.entries(PROTOCOLS)) {
+    for (const band of protocol.bands) {
+      const status = band.rateDeltaPerKg > 0 ? "below" : band.rateDeltaPerKg < 0 ? "above" : "in-range";
+      assert.ok(["below", "in-range", "above"].includes(status), `${indication} ${band.label}`);
+      if (band.bolusPerKg) assert.equal(status, "below", `${indication} ${band.label} bolus`);
+    }
+  }
 });
 
 test("invalid clinical inputs are rejected", () => {
